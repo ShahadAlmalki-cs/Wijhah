@@ -185,16 +185,37 @@ a:visited { color:inherit; }
 .form-section-title { display:flex; gap:14px; align-items:center; margin-bottom:22px; }
 .form-section-title span { display:grid; place-items:center; width:26px; height:26px; border-radius:50%; background:rgba(224,93,68,.1); color:var(--accent); font-size:11px; font-weight:700; }
 .form-section-title h2 { margin:0; font-size:19px; letter-spacing:-.3px; }
-.field-row { display:grid; grid-template-columns:1fr 1fr; gap:17px; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start; }
 
-/* ---- Labels ---- */
-label { display:block; margin-bottom:8px; color:var(--ink); font-size:12.5px; font-weight:600; letter-spacing:.1px; }
+/* ---- Field wrapper ----
+   Every control sits in a .field so label, control and hint share one rhythm.
+   The label is always its own line, which keeps English and Arabic aligned. */
+.field { display:block; margin-bottom:18px; min-width:0; }
+.field-row .field,
+.field:last-child { margin-bottom:0; }
+
+/* ---- Labels ----
+   Scoped to .field so nav/utility labels are never caught by this rule, and
+   scoped to direct children so a future nested label cannot stack twice. */
+.field > label {
+  display:block;
+  margin-bottom:8px;
+  color:var(--ink);
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:.1px;
+  line-height:1.4;
+  text-align:start;
+}
 
 /* ---- Shared control styling (input, select, textarea) ---- */
 input,
 select,
 textarea {
+  text-decoration:none !important;   /* never inherit an underline or squiggle */
+  display:block;
   width:100%;
+  max-width:100%;
   min-height:var(--tap);
   padding:13px 16px;
   border:1px solid rgba(0,0,0,.1);
@@ -209,6 +230,17 @@ textarea { min-height:104px; padding-top:14px; padding-bottom:14px; resize:verti
 
 input::placeholder,
 textarea::placeholder { color:#9aa3a0; }
+
+/* Spelling/grammar squiggles are a browser overlay, not real decoration -
+   `spellcheck="false"` in the markup is what switches them off. This hides the
+   residual decoration browsers may still paint on autofilled or invalid fields. */
+input,
+textarea,
+select,
+input::spelling-error,
+input::grammar-error,
+textarea::spelling-error,
+textarea::grammar-error { text-decoration-line:none !important; }
 
 /* Focus: accent border plus a soft halo instead of the browser ring. */
 input:focus,
@@ -250,7 +282,7 @@ select:focus { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www
 /* Firefox draws its own inner focus ring on selects - remove it. */
 select:-moz-focusring { color:transparent; text-shadow:0 0 0 var(--ink); }
 
-.field-hint { margin:9px 0 0; color:var(--muted); font-size:11.5px; line-height:1.5; }
+.field-hint { display:block; margin:9px 0 0; color:var(--muted); font-size:11.5px; line-height:1.5; text-align:start; }
 .submit-button { margin-top:0; }
 .form-status { display:inline-block; margin:15px 0 0 15px; color:var(--green); font-size:12px; font-weight:600; }
 .campus-map { position:relative; height:430px; margin:20px 0 9px; overflow:hidden; border:1px solid #709a9a; background:#a9c4c4; box-shadow:inset 0 0 0 8px rgba(255,255,255,.28); }
@@ -267,12 +299,40 @@ select:-moz-focusring { color:transparent; text-shadow:0 0 0 var(--ink); }
 .map-zone { position:absolute; z-index:2; padding:5px 8px; background:rgba(7,91,97,.86); color:white; font-size:9px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }.zone-north { top:10%; left:8%; }.zone-east { top:18%; right:6%; }.zone-south { bottom:8%; left:38%; }
 .map-building { position:absolute; z-index:3; display:grid; place-items:center; width:32px; height:29px; padding:0; border:2px solid white; border-radius:3px; background:var(--green); color:white; cursor:pointer; font:700 11px 'DM Sans',sans-serif; box-shadow:0 2px 0 rgba(18,52,59,.25); transform:translate(-50%,0); transition:transform .2s,background .2s; }.map-building:hover,.map-building.selected { z-index:4; background:var(--coral); transform:translate(-50%,0) scale(1.25); }.map-disclaimer { margin:0 0 30px; color:var(--muted); font-size:11px; }
 .vendor-intro { margin-bottom:42px; }.vendor-toolbar { display:flex; align-items:end; justify-content:space-between; padding:18px 0; margin-bottom:22px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }.vendor-toolbar strong,.vendor-toolbar span { display:block; }.vendor-toolbar strong { font-size:13px; }.vendor-toolbar span { margin-top:3px; color:var(--muted); font-size:11px; }.vendor-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }.vendor-card { position:relative; overflow:hidden; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
-.vendor-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lift); border-color:rgba(32,84,72,.18); }.vendor-card::before { content:''; display:block; height:9px; background:var(--green); }.vendor-card.accent-gold::before { background:var(--orange); }.vendor-card.accent-coral::before { background:var(--coral); }.vendor-card.accent-mint::before { background:#8fb27d; }.vendor-card.accent-blue::before { background:#6999a5; }.vendor-card-body { padding:23px; }.vendor-card-header { display:flex; align-items:start; justify-content:space-between; gap:15px; }.vendor-card h2 { margin:0 0 5px; font-size:24px; letter-spacing:-.6px; }.vendor-category { color:var(--muted); font-size:11px; }.vendor-eta { min-width:55px; padding:7px 8px; background:var(--cream); color:var(--green); font-size:10px; font-weight:700; text-align:center; }.vendor-meta { display:flex; gap:15px; margin:21px 0 16px; color:var(--muted); font-size:11px; }.vendor-menu { border-top:1px solid var(--line); }.menu-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid var(--line); transition:background-color .2s ease; }
+.vendor-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lift); border-color:rgba(32,84,72,.18); }.vendor-card::before { content:''; display:block; height:9px; background:var(--green); }.vendor-card.accent-gold::before { background:var(--orange); }.vendor-card.accent-coral::before { background:var(--coral); }.vendor-card.accent-mint::before { background:#8fb27d; }.vendor-card.accent-blue::before { background:#6999a5; }.vendor-card-body { padding:23px; }.vendor-card-header { display:flex; align-items:start; justify-content:space-between; gap:15px; }.vendor-card h2 { margin:0 0 5px; font-size:24px; letter-spacing:-.6px; }.vendor-category { color:var(--muted); font-size:11px; }.vendor-eta { min-width:55px; padding:7px 8px; background:var(--cream); color:var(--green); font-size:10px; font-weight:700; text-align:center; }.vendor-meta { display:flex; gap:15px; margin:21px 0 16px; color:var(--muted); font-size:11px; }.vendor-menu { border-top:1px solid var(--line); }/* Menu row: text on the start side, price + add button on the end side.
+   Logical properties keep both RTL and LTR correct without extra overrides. */
+.menu-row {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:13px 0; border-bottom:1px solid var(--line);
+  transition:background-color .2s ease;
+}
 .menu-row:hover { background:rgba(32,84,72,.035); }
 .menu-row strong,.menu-row small { display:block; }
 .menu-row strong { font-size:12.5px; }
 .menu-row small { margin-top:2px; color:var(--muted); font-size:10.5px; }
-.menu-price { flex:none; color:var(--green); font-size:12.5px; font-weight:700; font-variant-numeric:tabular-nums; }.menu-add { display:grid; place-items:center; width:27px; height:27px; margin-left:7px; border:1px solid var(--green); background:transparent; color:var(--green); cursor:pointer; font-size:17px; line-height:1; }.menu-add:hover { background:var(--green); color:white; }
+
+/* Text column: takes the slack, but min-width:0 lets long words wrap/ellipsis
+   instead of forcing the row wider than its container. */
+.menu-row > div:first-child { flex:1 1 auto; min-width:0; text-align:start; }
+
+/* Action cluster: price and button stay glued together on the end side. */
+.menu-price {
+  display:flex; align-items:center; gap:10px;
+  flex:0 0 auto; margin-inline-start:auto;
+  color:var(--green); font-size:12.5px; font-weight:700;
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.menu-add {
+  display:grid; place-items:center; flex:0 0 auto;
+  width:36px; height:36px; padding:0;
+  border:1px solid var(--green); border-radius:var(--radius-sm);
+  background:transparent; color:var(--green);
+  cursor:pointer; font-size:18px; line-height:1;
+  transition:background-color .2s ease, color .2s ease, transform .18s ease;
+}
+.menu-add:hover { background:var(--green); color:white; transform:scale(1.06); }
+.menu-add:active { transform:scale(.96); }
+.menu-add:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
 /* ---- Summary / info panel ---- */
 .order-summary,.contact-info {
   padding:32px;
@@ -299,7 +359,7 @@ select:-moz-focusring { color:transparent; text-shadow:0 0 0 var(--ink); }
 .total-line strong { color:var(--green); font-size:19px; }
 
 .contact-layout { margin-top:48px; }
-.contact-form label { margin-bottom:18px; }
+.contact-form label { display:block; margin-bottom:18px; color:var(--ink); font-size:12.5px; font-weight:600; text-align:start; }
 .contact-info { background:var(--green); color:white; border-color:transparent; }
 .contact-info .eyebrow { color:var(--gold); }
 .contact-info h2 { font-size:31px; }
@@ -326,6 +386,29 @@ select:-moz-focusring { color:transparent; text-shadow:0 0 0 var(--ink); }
    Tablet: the two-column form/summary layout gets tight below ~992px, so the
    summary drops beneath the form and the side rail becomes full width.
    --------------------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------------------
+   Persistent floating cart bar
+   Appears on every page once the cart is non-empty; routes to checkout.
+   --------------------------------------------------------------------------- */
+.cart-bar {
+  position:fixed; z-index:60;
+  left:50%; transform:translateX(-50%);
+  bottom:calc(16px + env(safe-area-inset-bottom, 0px));
+  width:calc(100% - 32px); max-width:480px;
+}
+.cart-bar[hidden] { display:none; }
+.cart-bar-inner { display:flex; align-items:center; gap:16px; padding:12px 14px 12px 20px; border-radius:999px; background:var(--green); color:white; box-shadow:0 14px 40px rgba(29,69,61,.34), 0 2px 0 rgba(255,255,255,.08) inset; animation:cartBarIn .28s cubic-bezier(.2,.9,.3,1.2); }
+@keyframes cartBarIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+.cart-bar-count { display:flex; align-items:center; gap:10px; flex:0 1 auto; min-width:0; font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cart-bar-badge { display:grid; place-items:center; flex:none; min-width:26px; height:26px; padding:0 7px; border-radius:999px; background:var(--orange); color:var(--ink); font:800 12px/1 'DM Sans',sans-serif; }
+.cart-bar-total { flex:none; margin-left:auto; color:#cfe0d8; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums; }
+.cart-bar .cart-bar-cta { flex:none; margin:0; padding:11px 18px; border-radius:999px; background:var(--orange); color:var(--ink); font-size:12px; font-weight:800; text-decoration:none; white-space:nowrap; }
+.cart-bar .cart-bar-cta:hover { background:#fff; color:var(--green); }
+/* On the checkout page the link would be circular, so show a compact summary. */
+.cart-bar.cart-bar-summary { width:min(420px, calc(100% - 32px)); }
+.cart-bar.cart-bar-summary .cart-bar-inner { padding:10px 18px; opacity:.96; }
+
 @media (max-width:992px) {
   .order-layout,
   .contact-layout,
@@ -389,20 +472,108 @@ select:-moz-focusring { color:transparent; text-shadow:0 0 0 var(--ink); }
   .cart-remove { width:38px; height:38px; }
 }
 
+/* ---------------------------------------------------------------------------
+   Phones (<600px)
+   Both directions get the same treatment: no physical left/right values, so
+   RTL mirrors automatically instead of needing a parallel set of overrides.
+   --------------------------------------------------------------------------- */
+@media (max-width:600px) {
+  .page-width { width:calc(100% - 32px); }
+
+  /* ---- Header: brand on its own row, nav scrolls horizontally beneath it ---- */
+  .site-header {
+    flex-wrap:wrap; align-items:center; gap:8px;
+    padding-block:10px; padding-inline:16px;
+    min-height:0;
+  }
+  .brand { flex:0 0 auto; }
+
+  /* A single scrollable rail beats hiding links behind a toggle: every
+     destination stays one swipe away and nothing is ever truncated. */
+  .main-nav {
+    order:2;
+    width:100%;
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    gap:4px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    white-space:nowrap;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;          /* Firefox */
+    -ms-overflow-style:none;       /* legacy Edge */
+    /* Inset on both ends so the first/last pill is not clipped by the edge. */
+    scroll-padding-inline:16px;
+    /* Vertical breathing room so focus rings and shadows are not cut off. */
+    padding-block:4px;
+  }
+  .main-nav::-webkit-scrollbar { display:none; width:0; height:0; }
+
+  .main-nav a,
+  .main-nav .language-toggle,
+  .main-nav .nav-cta { flex:0 0 auto; }
+  /* Pill padding is what keeps items from touching the viewport edge. */
+  .main-nav a:not(.nav-cta) { padding-inline:14px; }
+  .main-nav .nav-cta { margin-inline-start:8px; }
+
+  /* The header no longer wraps its own row, so the toggle stays in the rail. */
+  .mobile-nav-toggle { display:none; }
+
+  /* ---- Menu rows: text flexes, action cluster stays pinned and compact ---- */
+  .menu-row { gap:12px; padding-block:14px; }
+  .menu-row > div:first-child { flex:1 1 auto; min-width:0; text-align:start; }
+  .menu-row strong { font-size:13px; overflow-wrap:anywhere; }
+  .menu-row small { font-size:11px; overflow-wrap:anywhere; }
+  .menu-price {
+    display:flex; align-items:center; gap:10px;
+    flex:0 0 auto; margin-inline-start:auto;
+    white-space:nowrap;
+  }
+  /* 40px keeps the '+' comfortably tappable without crowding the price. */
+  .menu-add { width:40px; height:40px; font-size:19px; }
+
+  /* ---- Floating cart sits above the home indicator, never on the content ---- */
+  .cart-bar {
+    bottom:calc(16px + env(safe-area-inset-bottom, 0px));
+    width:calc(100% - 32px);
+    max-width:480px;
+    left:50%;
+    transform:translateX(-50%);
+  }
+  .cart-bar-inner {
+    display:flex; flex-wrap:nowrap; align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    /* Logical padding keeps the CTA flush inside the pill in both directions. */
+    padding-block:10px;
+    padding-inline:16px 12px;
+    border-radius:999px;
+  }
+  .cart-bar-count { flex:1 1 auto; min-width:0; font-size:12px; gap:8px; }
+  .cart-bar-count > :last-child { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cart-bar-total { display:none; }   /* the summary already shows the total */
+  .cart-bar .cart-bar-cta {
+    flex:0 1 auto; min-width:0;
+    padding:11px 16px; font-size:11.5px; min-height:var(--tap);
+    border-radius:999px; text-align:center; white-space:nowrap;
+  }
+  .cart-bar .cart-bar-cta span { display:none; }  /* keep the CTA to one line */
+  .cart-bar-badge { flex:0 0 auto; }
+
+  /* Room for the fixed bar so it never covers the last row of content. */
+  .inner-page { padding-bottom:120px; }
+  body:has(.cart-bar:not([hidden])) main { padding-bottom:120px; }
+  body:has(.cart-bar:not([hidden])) .site-footer { padding-bottom:120px; }
+
+  /* ---- General phone polish ---- */
+  .order-summary,.contact-info,.tracking-card,.tracking-summary,.side-note { padding:22px; }
+  .vendor-card-body { padding:20px; }
+  .building-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
+}
+
 @media (max-width:430px) {
   .page-width { width:calc(100% - 32px); }
   .site-header { position:relative; padding-left:16px; padding-right:16px; min-height:64px; }
-  .main-nav { position:relative; gap:6px; }
-  .mobile-nav-toggle { display:block; }
-  .main-nav a:not(.nav-cta),.main-nav .language-toggle { display:none; }
-  .main-nav.is-open {
-    flex-direction:column; align-items:stretch; gap:4px;
-    padding:10px; border:1px solid rgba(0,0,0,.06); border-radius:var(--radius-md);
-    background:rgba(255,255,255,.98); box-shadow:var(--shadow-lift);
-  }
-  .main-nav.is-open a:not(.nav-cta),
-  .main-nav.is-open .language-toggle { display:flex; justify-content:flex-start; min-height:var(--tap); }
-  .main-nav.is-open .nav-cta { order:5; margin:6px 0 0; justify-content:center; }
 
   .hero-actions { align-items:stretch; flex-direction:column; gap:16px; }
   .hero-actions .button { width:100%; }
@@ -411,16 +582,8 @@ select:-moz-focusring { color:transparent; text-shadow:0 0 0 var(--ink); }
   .spotlight-grid { grid-template-columns:1fr; }
   .hero h1 { letter-spacing:-1.6px; }
 
-  /* Cart bar docks to the bottom edge and stacks into two rows. */
-  .cart-bar { left:0; right:0; bottom:0; width:100%; transform:none; }
-  .cart-bar-inner { flex-wrap:wrap; gap:10px; border-radius:16px 16px 0 0; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); }
-  .cart-bar.cart-bar-summary .cart-bar-inner { border-radius:16px 16px 0 0; }
-  .cart-bar-count { flex:1 1 100%; font-size:12px; gap:8px; }
-  .cart-bar-total { flex:1 1 auto; margin-left:0; }
-  .cart-bar .cart-bar-cta { flex:1 1 auto; min-width:0; width:auto; padding:12px 16px; text-align:center; min-height:var(--tap); }
-  .cart-bar .cart-bar-cta span { display:none; }
-  /* Keep the footer clear of the fixed bar. */
-  body:has(.cart-bar:not([hidden])) .site-footer { padding-bottom:88px; }
+  /* Keep the footer clear of the floating bar. */
+  body:has(.cart-bar:not([hidden])) .site-footer { padding-bottom:120px; }
 
   /* 16px minimum stops iOS from zooming when a field is focused. */
   input,select,textarea { font-size:16px; }
@@ -437,13 +600,10 @@ select:-moz-focusring { color:transparent; text-shadow:0 0 0 var(--ink); }
   .feature-card a { left:26px; }
   [dir="rtl"] .feature-card a { left:auto; right:26px; }
 
-  /* Below ~360px the brand + Menu + CTA cannot share a row without pushing the
-     nav past the viewport edge, so let the header wrap onto two lines. */
-  .site-header { flex-wrap:wrap; gap:10px; padding-top:10px; padding-bottom:10px; }
-  .brand { min-width:0; }
-  .main-nav { width:100%; justify-content:space-between; }
-  .main-nav .nav-cta { margin-left:auto; }
-  .main-nav.is-open { width:100%; }
+  /* The <600px rail already wraps the header; just tighten the gutters. */
+  .site-header { padding-inline:12px; }
+  .main-nav { scroll-padding-inline:12px; }
+  .menu-add { width:38px; height:38px; }
 }
 [dir="rtl"] body { font-family:'DM Sans',Tahoma,sans-serif; }
 [dir="rtl"] .hero-actions,[dir="rtl"] .quick-strip > div,[dir="rtl"] .form-section-title { flex-direction:row-reverse; }
@@ -455,30 +615,10 @@ select:-moz-focusring { color:transparent; text-shadow:0 0 0 var(--ink); }
 /* ---------------------------------------------------------------------------
    Phone field (OrderPage)
    --------------------------------------------------------------------------- */
-/* Phone sits on its own row but uses the same label/input rhythm as the
-   Name + Email pair above it, so the section reads as one aligned block. */
-.field-block { display:block; margin-top:17px; }
-.field-block > label { display:block; }
-.field-example { display:block; margin-top:8px; color:var(--muted); font-size:10.5px; font-weight:500; line-height:1.45; }
+/* Helper text under a control, aligned with its label. */
+.field-example { display:block; margin:8px 0 0; color:var(--muted); font-size:10.5px; font-weight:500; line-height:1.45; text-align:start; }
 input[type="tel"] { font-variant-numeric:tabular-nums; letter-spacing:.5px; }
 [dir="rtl"] input[type="tel"] { direction:ltr; text-align:right; }
-
-/* ---------------------------------------------------------------------------
-   Persistent floating cart bar
-   Appears on every page once the cart is non-empty; routes to checkout.
-   --------------------------------------------------------------------------- */
-.cart-bar { position:fixed; left:50%; bottom:22px; z-index:60; width:min(680px, calc(100% - 32px)); transform:translateX(-50%); }
-.cart-bar[hidden] { display:none; }
-.cart-bar-inner { display:flex; align-items:center; gap:16px; padding:12px 14px 12px 20px; border-radius:999px; background:var(--green); color:white; box-shadow:0 14px 40px rgba(29,69,61,.34), 0 2px 0 rgba(255,255,255,.08) inset; animation:cartBarIn .28s cubic-bezier(.2,.9,.3,1.2); }
-@keyframes cartBarIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
-.cart-bar-count { display:flex; align-items:center; gap:10px; flex:0 1 auto; min-width:0; font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.cart-bar-badge { display:grid; place-items:center; flex:none; min-width:26px; height:26px; padding:0 7px; border-radius:999px; background:var(--orange); color:var(--ink); font:800 12px/1 'DM Sans',sans-serif; }
-.cart-bar-total { flex:none; margin-left:auto; color:#cfe0d8; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums; }
-.cart-bar .cart-bar-cta { flex:none; margin:0; padding:11px 18px; border-radius:999px; background:var(--orange); color:var(--ink); font-size:12px; font-weight:800; text-decoration:none; white-space:nowrap; }
-.cart-bar .cart-bar-cta:hover { background:#fff; color:var(--green); }
-/* On the checkout page the link would be circular, so show a compact summary. */
-.cart-bar.cart-bar-summary { width:min(420px, calc(100% - 32px)); }
-.cart-bar.cart-bar-summary .cart-bar-inner { padding:10px 18px; opacity:.96; }
 
 /* Respect users who prefer reduced motion. */
 @media (prefers-reduced-motion:reduce) {

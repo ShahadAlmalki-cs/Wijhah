@@ -13,13 +13,43 @@
   <main class="page-width inner-page">
     <section class="page-intro compact-intro"><p class="eyebrow">STEP 2 OF 2</p><h1>Tell us what<br><em>you are craving.</em></h1><p>Fill in the details below and we will get your order moving.</p></section>
     <div class="order-layout">
-      <form class="order-form" id="orderForm">
-        <div class="form-section"><div class="form-section-title"><span>01</span><h2>Your details</h2></div><div class="field-row"><label for="orderName">Full name<input id="orderName" name="name" type="text" placeholder="e.g. Noura Mohammed" autocomplete="name" required></label><label for="orderEmail">Email address<input id="orderEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required></label></div><div class="field-block"><label for="orderPhone">Mobile number<input id="orderPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="05xxxxxxxx" pattern="^(?:\+9665|05)[0-9]{8}$" title="Saudi mobile number, e.g. 0512345678 or +966512345678" aria-describedby="phoneHint" required></label><small class="field-example" id="phoneHint">Saudi mobile number: 05xxxxxxxx or +9665xxxxxxxx</small></div></div>
-        <div class="form-section"><div class="form-section-title"><span>02</span><h2>Delivery point</h2></div><label for="buildingSelect">Building<select name="building" id="buildingSelect" required><option value="">Select your building</option></select></label><p class="field-hint" id="feeHint">Choose a building to calculate your delivery fee.</p></div>
-        <div class="form-section"><div class="form-section-title"><span>03</span><h2>Order notes</h2></div><label for="orderNotes">Anything we should know?<textarea id="orderNotes" name="order" rows="4" placeholder="e.g. No onions, extra sauce"></textarea></label></div>
+      <form class="order-form" id="orderForm" spellcheck="false">
+        <div class="form-section">
+         <div class="form-section-title"><span>01</span><h2 id="detailsTitle">Your details</h2></div>
+         <div class="field-row">
+            <div class="field">
+              <label for="orderName" id="nameLabel">Full name</label>
+              <input id="orderName" name="name" type="text" placeholder="e.g. Noura Mohammed" autocomplete="name" spellcheck="false" required>
+            </div>
+            <div class="field">
+              <label for="orderEmail" id="emailLabel">Email address</label>
+              <input id="orderEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" spellcheck="false" required>
+            </div>
+         </div>
+         <div class="field">
+            <label for="orderPhone" id="phoneLabel">Mobile number</label>
+            <input id="orderPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="05xxxxxxxx" pattern="^(?:\+9665|05)[0-9]{8}$" title="Saudi mobile number, e.g. 0512345678 or +966512345678" aria-describedby="phoneHint" spellcheck="false" required>
+            <small class="field-example" id="phoneHint">Saudi mobile number: 05xxxxxxxx or +9665xxxxxxxx</small>
+         </div>
+        </div>
+        <div class="form-section">
+         <div class="form-section-title"><span>02</span><h2 id="deliveryTitle">Delivery point</h2></div>
+         <div class="field">
+            <label for="buildingSelect" id="buildingLabel">Building</label>
+            <select name="building" id="buildingSelect" spellcheck="false" required><option value="">Select your building</option></select>
+            <p class="field-hint" id="feeHint">Choose a building to calculate your delivery fee.</p>
+         </div>
+        </div>
+        <div class="form-section">
+         <div class="form-section-title"><span>03</span><h2 id="notesSectionTitle">Order notes</h2></div>
+         <div class="field">
+            <label for="orderNotes" id="notesLabel">Anything we should know?</label>
+            <textarea id="orderNotes" name="order" rows="4" placeholder="e.g. No onions, extra sauce" spellcheck="false"></textarea>
+         </div>
+        </div>
         <button class="button button-primary submit-button" type="submit">Send my order <span>&#8594;</span></button><p class="form-status" id="formStatus" role="status"></p>
       </form>
-      <aside class="order-summary"><p class="eyebrow">YOUR ORDER</p><h2>Simple pricing.<br>No surprises.</h2><div id="cartItems" class="cart-items"></div><div class="price-line"><span id="subtotalLabel">Subtotal</span><strong id="cartSubtotal">0 SAR</strong></div><div class="price-line"><span id="deliveryLabel">Delivery</span><strong id="cartDelivery">0 SAR</strong></div><div class="price-line total-line"><span id="totalLabel">Total</span><strong id="cartTotal">0 SAR</strong></div><div class="summary-divider"></div><p class="summary-small">Estimated arrival</p><strong class="arrival">Within 15–20 minutes</strong><p class="summary-small">Demo checkout only. No payment is collected.</p></aside>
+      <aside class="order-summary"><p class="eyebrow">YOUR ORDER</p><h2>Simple pricing.<br>No surprises.</h2><div id="cartItems" class="cart-items"></div><div class="price-line"><span id="subtotalLabel">Subtotal</span><strong id="cartSubtotal">0 SAR</strong></div><div class="price-line"><span id="deliveryLabel">Delivery</span><strong id="cartDelivery">0 SAR</strong></div><div class="price-line total-line"><span id="totalLabel">Total</span><strong id="cartTotal">0 SAR</strong></div><div class="summary-divider"></div><p class="summary-small" id="estimatedLabel">Estimated arrival</p><strong class="arrival" id="arrivalValue">Within 15-20 minutes</strong><p class="summary-small" id="privacyNote">Demo checkout only. No payment is collected.</p></aside>
     </div>
   </main>
   <footer class="site-footer"><div class="page-width"><span>وجهة · WIJHAH</span><span>Independent student project for Taif University · <span id="year"></span></span></div></footer>

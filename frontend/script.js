@@ -50,7 +50,7 @@ const copy = {
 			homeEyebrow: 'TAIF UNIVERSITY CAMPUS · INDEPENDENT STUDENT SERVICE', homeTitle: 'Your break,<br><em>made easy.</em>', homeText: 'Order your favorite meal and have it waiting at your building before your next class.', choose: 'Browse the menu <span aria-hidden="true">&#8594;</span>', average: '<strong>15 min</strong><br>average delivery', today: 'TODAY ON CAMPUS', goodFood: 'Good food.<br>Zero queues.', delivered: 'Delivered to your building', mapTitle: 'Campus map', mapHint: 'Click a building to select it', mapDisclaimer: 'Uses UniversityMap.jpeg when available. Tap a numbered building to continue.',
 		aboutEyebrow: 'STEP 1 OF 2', aboutTitle: 'Where should we<br><em>meet you?</em>', aboutText: 'Choose your building to see the delivery time and fee. You can change it later in your order.', campus: 'Campus buildings', locations: '26 locations', quick: 'Quick delivery,<br>right to your door.', feeInfo: 'Restaurants are in Building 16. Building 16 is free, buildings 2–15 are <strong>5 SAR</strong>, and buildings 17–27 are <strong>10 SAR</strong>.', continue: 'Continue to order',
 		pick: 'Pick a building', pickSmall: 'We deliver across campus', tell: 'Tell us your order', tellSmall: 'Simple, no account needed', enjoy: 'Enjoy your break', enjoySmall: 'Fast delivery, every time', ready: 'ORDER WHENEVER', spotlight: 'Make your next order<br>the easiest one yet.', prices: 'View delivery prices <span aria-hidden="true">&#8594;</span>', fromClass: 'From class<br>to comfort.', fromText: 'One clear form gets your meal moving. No waiting in line or hunting for the right counter.', place: 'Place an order <span aria-hidden="true">&#8594;</span>', know: 'Know where<br>it is going.', knowText: 'Choose your building at checkout and see the delivery fee before you send anything.', see: 'Browse vendors <span aria-hidden="true">&#8594;</span>',
-		orderEyebrow: 'STEP 2 OF 2', orderTitle: 'Tell us what<br><em>you are craving.</em>', orderText: 'Fill in the details below and we will get your order moving.', details: 'Your details', fullName: 'Full name', email: 'Email address', phone: 'Mobile number', phoneHint: 'Saudi mobile number: 05xxxxxxxx or +9665xxxxxxxx', deliveryPoint: 'Delivery point', building: 'Building', selectBuilding: 'Select your building', orderSection: 'Your order', noteLabel: 'Anything we should know?', sendOrder: 'Send my order', delivery: 'YOUR DELIVERY', rangePickup: 'Restaurant pickup', rangeSame: 'Building 16', rangeNear: 'Buildings 2–15', rangeFar: 'Buildings 17–27', subtotal: 'Subtotal', deliveryLabel: 'Delivery', total: 'Total', simple: 'Simple pricing.<br>No surprises.', estimated: 'Estimated arrival', arrival: 'Within 15–20 minutes', privacy: 'We will use your email only to confirm this order.',
+		orderEyebrow: 'STEP 2 OF 2', orderTitle: 'Tell us what<br><em>you are craving.</em>', orderText: 'Fill in the details below and we will get your order moving.', details: 'Your details', fullName: 'Full name', email: 'Email address', phone: 'Mobile number', phoneHint: 'Saudi mobile number: 05xxxxxxxx or +9665xxxxxxxx', deliveryPoint: 'Delivery point', building: 'Building', selectBuilding: 'Select your building', orderSection: 'Your order', notesSection: 'Order notes', noteLabel: 'Anything we should know?', sendOrder: 'Send my order', delivery: 'YOUR DELIVERY', rangePickup: 'Restaurant pickup', rangeSame: 'Building 16', rangeNear: 'Buildings 2–15', rangeFar: 'Buildings 17–27', subtotal: 'Subtotal', deliveryLabel: 'Delivery', total: 'Total', simple: 'Simple pricing.<br>No surprises.', estimated: 'Estimated arrival', arrival: 'Within 15–20 minutes', privacy: 'We will use your email only to confirm this order.',
 		contactEyebrow: 'WE ARE HERE TO HELP', contactTitle: "Questions?<br><em>Let's talk.</em>", contactText: 'Send us a message and the Wijhah team will get back to you as soon as possible.', yourName: 'Your name', message: 'Message', sendMessage: 'Send message', detailsTitle: 'CONTACT DETAILS', support: 'Wijhah<br>support desk', supportText: 'For order questions, building updates or feedback, send us a note or email us directly.', hours: 'Sunday – Thursday<br>8:00 AM – 4:00 PM'
 	},
 	ar: {
@@ -59,7 +59,7 @@ const copy = {
 		homeEyebrow: 'حرم جامعة الطائف · خدمة طلابية مستقلة', homeTitle: 'اطلب وجبتك<br><em>بكل سهولة.</em>', homeText: 'من كافيهات ومطاعم الجامعة مباشرة إلى مبناك، دون عناء الانتظار.', choose: 'تصفح القائمة <span aria-hidden="true">&#8592;</span>', average: '<strong>١٥ دقيقة</strong><br>متوسط التوصيل', today: 'اليوم في الحرم الجامعي', goodFood: 'طعام لذيذ.<br>بلا طوابير.', delivered: 'التوصيل إلى مبناك',
 		pick: 'اختر المبنى', pickSmall: 'نوصّل إلى كل أنحاء الحرم', tell: 'حدّد طلبك', tellSmall: 'نموذج بسيط بلا حساب', enjoy: 'استمتع بوقتك', enjoySmall: 'توصيل سريع في كل مرة', ready: 'اطلب متى شئت', spotlight: 'اجعل طلبك القادم<br>الأسهل حتى الآن.', prices: 'عرض أسعار التوصيل <span aria-hidden="true">&#8592;</span>', fromClass: 'من المحاضرة<br>إلى راحتك.', fromText: 'نموذج واحد واضح يوصّل طلبك، بلا انتظار في الطوابير أو بحث عن الوجهة الصحيحة.', place: 'اطلب الآن <span aria-hidden="true">&#8592;</span>', know: 'اعرف أين<br>يصل طلبك.', knowText: 'اختر مبناك عند الدفع واطّلع على رسوم التوصيل قبل الإرسال.', see: 'تصفح المطاعم <span aria-hidden="true">&#8592;</span>',
 				aboutEyebrow: 'الخطوة 1 من 2', aboutTitle: 'إلى أي مبنى<br><em>نوصل طلبك؟</em>', aboutText: 'اختر مبناك لعرض وقت التوصيل ورسومه، ويمكنك تغييره لاحقًا أثناء الطلب.', campus: 'مباني الجامعة', locations: '26 موقعًا', mapTitle: 'خريطة الحرم الجامعي', mapHint: 'اضغط على مبنى لاختياره', mapDisclaimer: 'تظهر الصورة الأصلية UniversityMap.jpeg عند توفرها. اختر مبنى مرقمًا للمتابعة.', quick: 'توصيل سريع،<br>إلى بابك مباشرة.', feeInfo: 'المطاعم في المبنى 16. التوصيل إلى المبنى 16 مجاني، وإلى المباني 2–15 بـ<strong>5 ريالات</strong>، وإلى المباني 17–27 بـ<strong>10 ريالات</strong>.', continue: 'متابعة الطلب',
-				orderEyebrow: 'الخطوة 2 من 2', orderTitle: 'أخبرنا بما<br><em>تشتهيه اليوم.</em>', orderText: 'عبّئ البيانات التالية وسنبدأ تجهيز طلبك.', details: 'بياناتك', fullName: 'الاسم الكامل', email: 'البريد الإلكتروني', phone: 'رقم الجوال', phoneHint: 'رقم جوال سعودي: 05xxxxxxxx أو +9665xxxxxxxx', deliveryPoint: 'مكان التوصيل', building: 'المبنى', selectBuilding: 'اختر المبنى', orderSection: 'طلبك', noteLabel: 'هل لديك ملاحظات؟', sendOrder: 'إرسال الطلب', delivery: 'تفاصيل التوصيل', rangePickup: 'استلام من المطعم', rangeSame: 'المبنى 16', rangeNear: 'المباني 2–15', rangeFar: 'المباني 17–27', subtotal: 'المجموع الفرعي', deliveryLabel: 'التوصيل', total: 'الإجمالي', simple: 'أسعار واضحة.<br>بلا مفاجآت.', estimated: 'وقت الوصول المتوقع', arrival: 'خلال 15–20 دقيقة', privacy: 'سنستخدم بريدك الإلكتروني لتأكيد الطلب فقط.',
+				orderEyebrow: 'الخطوة 2 من 2', orderTitle: 'أخبرنا بما<br><em>تشتهيه اليوم.</em>', orderText: 'عبّئ البيانات التالية وسنبدأ تجهيز طلبك.', details: 'بياناتك', fullName: 'الاسم الكامل', email: 'البريد الإلكتروني', phone: 'رقم الجوال', phoneHint: 'رقم جوال سعودي: 05xxxxxxxx أو +9665xxxxxxxx', deliveryPoint: 'مكان التوصيل', building: 'المبنى', selectBuilding: 'اختر المبنى', orderSection: 'طلبك', notesSection: 'ملاحظات الطلب', noteLabel: 'هل لديك ملاحظات؟', sendOrder: 'إرسال الطلب', delivery: 'تفاصيل التوصيل', rangePickup: 'استلام من المطعم', rangeSame: 'المبنى 16', rangeNear: 'المباني 2–15', rangeFar: 'المباني 17–27', subtotal: 'المجموع الفرعي', deliveryLabel: 'التوصيل', total: 'الإجمالي', simple: 'أسعار واضحة.<br>بلا مفاجآت.', estimated: 'وقت الوصول المتوقع', arrival: 'خلال 15–20 دقيقة', privacy: 'سنستخدم بريدك الإلكتروني لتأكيد الطلب فقط.',
 		contactEyebrow: 'نحن هنا للمساعدة', contactTitle: 'لديك سؤال؟<br><em>تواصل معنا.</em>', contactText: 'أرسل رسالتك وسيتواصل معك فريق وجهة في أقرب وقت.', yourName: 'اسمك', message: 'الرسالة', sendMessage: 'إرسال الرسالة', detailsTitle: 'بيانات التواصل', support: 'فريق دعم<br>وجهة', supportText: 'للاستفسار عن الطلبات أو المباني أو لإرسال ملاحظاتك، راسلنا أو تواصل معنا عبر البريد.', hours: 'الأحد – الخميس<br>8:00 ص – 4:00 م'
 	}
 };
@@ -172,6 +172,95 @@ const syncSubmitState = (language) => {
 	button.setAttribute('data-cart-count', String(cart.length));
 };
 
+// ------------------------------------------------------------------ //
+// Demo / offline orders
+// Static hosting (GitHub Pages) has no Flask API, so a failed submit falls
+// back to an order simulated entirely in the browser. It is stored under the
+// same shape the tracker expects, so tracking.html needs no special casing.
+// ------------------------------------------------------------------ //
+const DEMO_ORDER_KEY = 'wijhah-demo-orders';
+
+// Checkout form draft. sessionStorage so it survives navigation but not a closed tab.
+const ORDER_DRAFT_KEY = 'wijhah-order-draft';
+const readDraft = () => {
+	try { return JSON.parse(sessionStorage.getItem(ORDER_DRAFT_KEY) || '{}') || {}; }
+	catch (error) { return {}; }
+};
+const writeDraft = (patch) => {
+	try { sessionStorage.setItem(ORDER_DRAFT_KEY, JSON.stringify(Object.assign(readDraft(), patch))); }
+	catch (error) { /* storage unavailable (private mode) - degrade silently */ }
+};
+const clearDraft = () => { try { sessionStorage.removeItem(ORDER_DRAFT_KEY); } catch (error) {} };
+
+const newDemoOrderId = () => {
+	// e.g. W-849201 - short, readable, and clearly not a server id (WJ-).
+	const digits = String(Math.floor(100000 + Math.random() * 900000));
+	return `W-${digits}`;
+};
+
+const readDemoOrders = () => {
+	try { return JSON.parse(localStorage.getItem(DEMO_ORDER_KEY) || '{}') || {}; }
+	catch (error) { return {}; }
+};
+
+const saveDemoOrder = ({ name, email, phone, building, items, language }) => {
+	const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+	const deliveryFee = getDeliveryFee(building);
+	const total = subtotal + deliveryFee;
+	const id = newDemoOrderId();
+	const createdAt = new Date().toISOString();
+
+	const order = {
+	id,
+	customer_name: name,
+	customer_email: email,
+	customer_phone: phone,
+	building_id: building,
+	building_name_en: buildingNames[building] ? buildingNames[building][0] : `Building ${building}`,
+	building_name_ar: buildingNames[building] ? buildingNames[building][1] : `المبنى ${building}`,
+		subtotal,
+		delivery_fee: deliveryFee,
+		total,
+	status: 'placed',
+	created_at: createdAt,
+	// Demo orders advance locally on read, mirroring AUTO_ADVANCE_SECONDS.
+		demo: true,
+	items: items.map((item) => ({
+	item_name: item.name[language] || item.name.en,
+	quantity: item.quantity,
+	price: item.price,
+	})),
+	};
+
+	try {
+	const all = readDemoOrders();
+	all[id] = order;
+	localStorage.setItem(DEMO_ORDER_KEY, JSON.stringify(all));
+	localStorage.setItem('wijhah-order-id', id);
+	localStorage.removeItem('wijhah-cart');
+	clearDraft();
+	} catch (error) { /* storage unavailable - the redirect still works */ }
+
+	return order;
+};
+
+// Mirrors ORDER_STATUSES / AUTO_ADVANCE_SECONDS in app.py.
+const TRACKING_STATUS_ORDER = ['placed', 'preparing', 'out_for_delivery', 'delivered'];
+const DEMO_ADVANCE_SECONDS = 17;
+
+// Reads a locally simulated order and advances its status as time passes,
+// mirroring the server's auto-advance so the tracker still animates offline.
+const readLocalOrder = (orderId) => {
+	const order = readDemoOrders()[orderId];
+	if (!order) return null;
+
+	const elapsed = (Date.now() - new Date(order.created_at).getTime()) / 1000;
+	const step = Math.floor(elapsed / DEMO_ADVANCE_SECONDS);
+	const stored = Math.max(0, TRACKING_STATUS_ORDER.indexOf(order.status));
+	const index = Math.min(Math.max(stored, step), TRACKING_STATUS_ORDER.length - 1);
+	return Object.assign({}, order, { status: TRACKING_STATUS_ORDER[index] });
+};
+
 const renderCart = (language) => {
 	const cartItems = document.getElementById('cartItems');
 	if (!cartItems || typeof campusVendors === 'undefined') return;
@@ -212,8 +301,6 @@ const renderTrackingPageSteps = (language, order) => {
 	}).join('');
 };
 
-const TRACKING_STATUS_ORDER = ['placed', 'preparing', 'out_for_delivery', 'delivered'];
-
 const renderTrackingPage = async (language) => {
 	const trackingPage = document.getElementById('trackingPage');
 	if (!trackingPage) return;
@@ -251,24 +338,31 @@ const renderTrackingPage = async (language) => {
 	totalEl.textContent = '—';
 	document.getElementById('trackingSteps').innerHTML = `<p class="cart-empty">${isArabic ? 'جارٍ تحميل حالة الطلب…' : 'Loading order status…'}</p>`;
 
+	let data = null;
 	try {
 	const response = await fetch(`${WIJHAH_API_BASE}/api/orders/${encodeURIComponent(orderId)}`);
-	const data = await response.json().catch(() => ({}));
-	if (!response.ok) {
-	throw new Error(data.error || `(${response.status})`);
+	const body = await response.json().catch(() => ({}));
+	if (response.ok) data = body;
+	} catch (error) {
+	// Network failure is expected on static hosting; fall through to the demo store.
+	data = null;
 	}
+
+	// No API (or it refused): look for a locally simulated order.
+	if (!data) data = readLocalOrder(orderId);
+
+	if (data) {
 	const buildingName = isArabic ? (data.building_name_ar || `المبنى ${data.building_id}`) : (data.building_name_en || `Building ${data.building_id}`);
 		destinationEl.textContent = buildingName;
 	const itemCount = (data.items || []).reduce((sum, item) => sum + item.quantity, 0);
 	itemsEl.textContent = isArabic ? `${itemCount} عناصر · التوصيل من المبنى 16` : `${itemCount} items · delivered from Building 16`;
 		totalEl.textContent = `${data.total} ${isArabic ? 'ريال' : 'SAR'}`;
 		renderTrackingPageSteps(language, data);
-	} catch (error) {
-	const offline = error instanceof TypeError;
+	} else {
 		destinationEl.textContent = isArabic ? 'تعذر تحميل الطلب' : 'Could not load order';
-	itemsEl.textContent = offline
-	? (isArabic ? 'تعذر الاتصال بالخادم.' : 'Could not reach the server.')
-	: (isArabic ? `الطلب غير موجود أو حدث خطأ: ${error.message}` : `Order not found or an error occurred: ${error.message}`);
+	itemsEl.textContent = isArabic
+	? 'لم نعثر على هذا الطلب. تأكد من رقم الطلب أو ابدأ طلبًا جديدًا.'
+	: 'We could not find that order. Check the order number or start a new one.';
 		totalEl.textContent = '—';
 		document.getElementById('trackingSteps').innerHTML = '';
 	}
@@ -325,25 +419,27 @@ const applyLanguage = (language) => {
 	setCopy('.side-note h3', 'quick', language);
 	setCopy('.side-note p', 'feeInfo', language);
 	setCopy('.side-note .button', 'continue', language, 'textContent');
-	setCopy('.form-section:nth-child(1) h2', 'details', language);
-	setCopy('.form-section:nth-child(1) label[for="orderName"]', 'fullName', language, 'firstChild');
-	setCopy('.form-section:nth-child(1) label[for="orderEmail"]', 'email', language, 'firstChild');
-	setCopy('.form-section:nth-child(1) label[for="orderPhone"]', 'phone', language, 'firstChild');
+	// Every label is addressed by its own id, so no selector can hit two nodes.
+	setCopy('#detailsTitle', 'details', language, 'textContent');
+	setCopy('#nameLabel', 'fullName', language, 'textContent');
+	setCopy('#emailLabel', 'email', language, 'textContent');
+	setCopy('#phoneLabel', 'phone', language, 'textContent');
 	setCopy('#phoneHint', 'phoneHint', language, 'textContent');
-	setCopy('.form-section:nth-child(2) h2', 'deliveryPoint', language);
-	setCopy('.form-section:nth-child(2) label', 'building', language, 'firstChild');
+	setCopy('#deliveryTitle', 'deliveryPoint', language, 'textContent');
+	setCopy('#buildingLabel', 'building', language, 'textContent');
 	setCopy('#buildingSelect option:first-child', 'selectBuilding', language, 'textContent');
-	setCopy('.form-section:nth-child(3) h2', 'noteLabel', language);
-	setCopy('.form-section:nth-child(3) label', 'noteLabel', language, 'firstChild');
+	setCopy('#notesSectionTitle', 'notesSection', language, 'textContent');
+	setCopy('#notesLabel', 'noteLabel', language, 'textContent');
 	syncSubmitState(language);
 	setCopy('.order-summary .eyebrow', 'delivery', language);
 	setCopy('.order-summary h2', 'simple', language);
 	setCopy('#subtotalLabel', 'subtotal', language, 'textContent');
 	setCopy('#deliveryLabel', 'deliveryLabel', language, 'textContent');
 	setCopy('#totalLabel', 'total', language, 'textContent');
-	setCopy('.order-summary .summary-small', 'estimated', language, 'textContent');
-	setCopy('.order-summary .arrival', 'arrival', language, 'textContent');
-	setCopy('.order-summary .summary-small:last-child', 'privacy', language, 'textContent');
+	// Both paragraphs share .summary-small, so address them by id.
+	setCopy('#estimatedLabel', 'estimated', language, 'textContent');
+	setCopy('#arrivalValue', 'arrival', language, 'textContent');
+	setCopy('#privacyNote', 'privacy', language, 'textContent');
 	setCopy('.contact-layout .eyebrow', 'contactEyebrow', language);
 	setCopy('.contact-layout h1', 'contactTitle', language);
 	setCopy('.contact-layout .page-intro > p:last-child', 'contactText', language);
@@ -458,18 +554,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	// Checkout form draft. sessionStorage so it survives navigation but not a closed tab.
-	const ORDER_DRAFT_KEY = 'wijhah-order-draft';
-	const readDraft = () => {
-		try { return JSON.parse(sessionStorage.getItem(ORDER_DRAFT_KEY) || '{}') || {}; }
-	catch (error) { return {}; }
-	};
-	const writeDraft = (patch) => {
-		try { sessionStorage.setItem(ORDER_DRAFT_KEY, JSON.stringify({ ...readDraft(), ...patch })); }
-	catch (error) { /* storage unavailable (private mode) - degrade silently */ }
-	};
-	const clearDraft = () => { try { sessionStorage.removeItem(ORDER_DRAFT_KEY); } catch (error) {} };
-
 	const buildingSelect = document.getElementById('buildingSelect');
 	const feeHint = document.getElementById('feeHint');
 
@@ -577,10 +661,24 @@ document.addEventListener('DOMContentLoaded', () => {
 	renderCartBar(isArabic ? 'ar' : 'en');
 	window.location.href = `tracking.html?order=${encodeURIComponent(data.id)}`;
 	} catch (error) {
-	const offline = error instanceof TypeError;
-	formStatus.textContent = offline
-	? (isArabic ? 'تعذر الاتصال بالخادم. تأكد من تشغيل الخادم ثم حاول مجددًا.' : 'Could not reach the server. Make sure the backend is running, then try again.')
-	: (isArabic ? `تعذر إرسال الطلب: ${error.message}` : `Could not send your order: ${error.message}`);
+	// No backend (static hosting such as GitHub Pages) or a rejected request:
+	// fall back to a locally simulated order instead of dead-ending the user.
+	const simulated = saveDemoOrder({
+	name: nameField ? nameField.value.trim() : '',
+	email: emailField ? emailField.value.trim() : '',
+	phone: phoneClean,
+	building: Number(building),
+	items: cart,
+	language: isArabic ? 'ar' : 'en',
+	});
+	formStatus.textContent = isArabic
+	? `وضع العرض التجريبي: تم إنشاء طلب تجريبي ${simulated.id}. جارٍ تحويلك…`
+	: `Demo mode: created demo order ${simulated.id}. Taking you to tracking…`;
+	if (submitButton) submitButton.disabled = true;
+	window.setTimeout(() => {
+	window.location.href = `tracking.html?order=${encodeURIComponent(simulated.id)}`;
+	}, 1200);
+	return;
 	} finally {
 	// Runs on success and failure alike, so the button is never left disabled.
 	syncSubmitState(isArabic ? 'ar' : 'en');
