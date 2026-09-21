@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+# Runtime data
+instance/
+*.db
+*.sqlite3
+# Secrets
+.env
+# Editor / OS
+.vscode/
+.DS_Store
+# Scratch
+_tmp_*.py
