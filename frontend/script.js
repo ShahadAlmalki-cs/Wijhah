@@ -368,10 +368,25 @@ const renderTrackingPage = async (language) => {
 	}
 };
 
+// Direction is derived in one place. Arabic is the default so a first visit
+// without a saved choice still renders correctly.
+const DEFAULT_LANGUAGE = 'ar';
+
+const resolveLanguage = () => {
+	const saved = localStorage.getItem('wijhah-language');
+	return saved === 'ar' || saved === 'en' ? saved : DEFAULT_LANGUAGE;
+};
+
+const applyDirection = (language) => {
+	const root = document.documentElement;
+	const isArabic = language === 'ar';
+	root.setAttribute('lang', isArabic ? 'ar' : 'en');
+	root.setAttribute('dir', isArabic ? 'rtl' : 'ltr');
+};
+
 const applyLanguage = (language) => {
 	const text = copy[language];
-	document.documentElement.lang = language;
-	document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+	applyDirection(language);
 	localStorage.setItem('wijhah-language', language);
 	const toggle = document.getElementById('languageToggle');
 	if (toggle) toggle.textContent = text.language;
@@ -468,7 +483,7 @@ const applyLanguage = (language) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-	const language = localStorage.getItem('wijhah-language') || 'en';
+	const language = resolveLanguage();
 	const selectedBuilding = localStorage.getItem('wijhah-building');
 	const year = document.getElementById('year');
 	if (year) year.textContent = new Date().getFullYear();
