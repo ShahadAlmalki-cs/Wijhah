@@ -669,3 +669,13 @@ select[name="building"],
     border-radius: 8px !important;
     width: 100% !important;
 }
+
+.campus-map {
+    margin-bottom: 32px !important;
+}
+
+#buildingsTitle,
+.list-heading {
+    margin-top: 16px !important;
+    padding-top: 8px !important;
+}
