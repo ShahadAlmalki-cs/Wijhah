@@ -47,7 +47,7 @@ const copy = {
 	en: {
 		navHome: 'Home', navVendors: 'Vendors', navBuildings: 'Buildings', navTracking: 'Track order', navHelp: 'Help', navOrder: 'Start an order', language: 'العربية',
 		footer: 'Independent student project for Taif University',
-			homeEyebrow: 'TAIF UNIVERSITY CAMPUS · INDEPENDENT STUDENT SERVICE', homeTitle: 'Your break,<br><em>made easy.</em>', homeText: 'Order your favorite meal and have it waiting at your building before your next class.', choose: 'Browse the menu <span aria-hidden="true">&#8594;</span>', average: '<strong>15 min</strong><br>average delivery', today: 'TODAY ON CAMPUS', goodFood: 'Good food.<br>Zero queues.', delivered: 'Delivered to your building', mapTitle: 'Campus map', mapHint: 'Click a building to select it', mapDisclaimer: 'Uses UniversityMap.jpg when available. Tap a numbered building to continue.',
+			homeEyebrow: 'TAIF UNIVERSITY CAMPUS · INDEPENDENT STUDENT SERVICE', homeTitle: 'Your break,<br><em>made easy.</em>', homeText: 'Order your favorite meal and have it waiting at your building before your next class.', choose: 'Browse the menu <span aria-hidden="true">&#8594;</span>', average: '<strong>15 min</strong><br>average delivery', today: 'TODAY ON CAMPUS', goodFood: 'Good food.<br>Zero queues.', delivered: 'Delivered to your building', mapTitle: 'Campus map', mapHint: 'Click a building to select it', mapDisclaimer: '',
 		aboutEyebrow: 'STEP 1 OF 2', aboutTitle: 'Where should we<br><em>meet you?</em>', aboutText: 'Choose your building to see the delivery time and fee. You can change it later in your order.', campus: 'Campus buildings', locations: '26 locations', quick: 'Quick delivery,<br>right to your door.', feeInfo: 'Restaurants are in Building 16. Building 16 is free, buildings 2–15 are <strong>5 SAR</strong>, and buildings 17–27 are <strong>10 SAR</strong>.', continue: 'Continue to order',
 		pick: 'Pick a building', pickSmall: 'We deliver across campus', tell: 'Tell us your order', tellSmall: 'Simple, no account needed', enjoy: 'Enjoy your break', enjoySmall: 'Fast delivery, every time', ready: 'ORDER WHENEVER', spotlight: 'Make your next order<br>the easiest one yet.', prices: 'View delivery prices <span aria-hidden="true">&#8594;</span>', fromClass: 'From class<br>to comfort.', fromText: 'One clear form gets your meal moving. No waiting in line or hunting for the right counter.', place: 'Place an order <span aria-hidden="true">&#8594;</span>', know: 'Know where<br>it is going.', knowText: 'Choose your building at checkout and see the delivery fee before you send anything.', see: 'Browse vendors <span aria-hidden="true">&#8594;</span>',
 		orderEyebrow: 'STEP 2 OF 2', orderTitle: 'Tell us what<br><em>you are craving.</em>', orderText: 'Fill in the details below and we will get your order moving.', details: 'Your details', fullName: 'Full name', email: 'Email address', phone: 'Mobile number', phoneHint: 'Saudi mobile number: 05xxxxxxxx or +9665xxxxxxxx', deliveryPoint: 'Delivery point', building: 'Building', selectBuilding: 'Select your building', orderSection: 'Your order', notesSection: 'Order notes', noteLabel: 'Anything we should know?', sendOrder: 'Send my order', delivery: 'YOUR DELIVERY', rangePickup: 'Restaurant pickup', rangeSame: 'Building 16', rangeNear: 'Buildings 2–15', rangeFar: 'Buildings 17–27', subtotal: 'Subtotal', deliveryLabel: 'Delivery', total: 'Total', simple: 'Simple pricing.<br>No surprises.', estimated: 'Estimated arrival', arrival: 'Within 15–20 minutes', privacy: 'We will use your email only to confirm this order.',
@@ -58,7 +58,7 @@ const copy = {
 		footer: 'مشروع طلابي مستقل لجامعة الطائف',
 		homeEyebrow: 'حرم جامعة الطائف · خدمة طلابية مستقلة', homeTitle: 'اطلب وجبتك<br><em>بكل سهولة.</em>', homeText: 'من كافيهات ومطاعم الجامعة مباشرة إلى مبناك، دون عناء الانتظار.', choose: 'تصفح القائمة <span aria-hidden="true">&#8592;</span>', average: '<strong>١٥ دقيقة</strong><br>متوسط التوصيل', today: 'اليوم في الحرم الجامعي', goodFood: 'طعام لذيذ.<br>بلا طوابير.', delivered: 'التوصيل إلى مبناك',
 		pick: 'اختر المبنى', pickSmall: 'نوصّل إلى كل أنحاء الحرم', tell: 'حدّد طلبك', tellSmall: 'نموذج بسيط بلا حساب', enjoy: 'استمتع بوقتك', enjoySmall: 'توصيل سريع في كل مرة', ready: 'اطلب متى شئت', spotlight: 'اجعل طلبك القادم<br>الأسهل حتى الآن.', prices: 'عرض أسعار التوصيل <span aria-hidden="true">&#8592;</span>', fromClass: 'من المحاضرة<br>إلى راحتك.', fromText: 'نموذج واحد واضح يوصّل طلبك، بلا انتظار في الطوابير أو بحث عن الوجهة الصحيحة.', place: 'اطلب الآن <span aria-hidden="true">&#8592;</span>', know: 'اعرف أين<br>يصل طلبك.', knowText: 'اختر مبناك عند الدفع واطّلع على رسوم التوصيل قبل الإرسال.', see: 'تصفح المطاعم <span aria-hidden="true">&#8592;</span>',
-				aboutEyebrow: 'الخطوة 1 من 2', aboutTitle: 'إلى أي مبنى<br><em>نوصل طلبك؟</em>', aboutText: 'اختر مبناك لعرض وقت التوصيل ورسومه، ويمكنك تغييره لاحقًا أثناء الطلب.', campus: 'مباني الجامعة', locations: '26 موقعًا', mapTitle: 'خريطة الحرم الجامعي', mapHint: 'اضغط على مبنى لاختياره', mapDisclaimer: 'تظهر الصورة الأصلية UniversityMap.jpg عند توفرها. اختر مبنى مرقمًا للمتابعة.', quick: 'توصيل سريع،<br>إلى بابك مباشرة.', feeInfo: 'المطاعم في المبنى 16. التوصيل إلى المبنى 16 مجاني، وإلى المباني 2–15 بـ<strong>5 ريالات</strong>، وإلى المباني 17–27 بـ<strong>10 ريالات</strong>.', continue: 'متابعة الطلب',
+				aboutEyebrow: 'الخطوة 1 من 2', aboutTitle: 'إلى أي مبنى<br><em>نوصل طلبك؟</em>', aboutText: 'اختر مبناك لعرض وقت التوصيل ورسومه، ويمكنك تغييره لاحقًا أثناء الطلب.', campus: 'مباني الجامعة', locations: '26 موقعًا', mapTitle: 'خريطة الحرم الجامعي', mapHint: 'اضغط على مبنى لاختياره', mapDisclaimer: '', quick: 'توصيل سريع،<br>إلى بابك مباشرة.', feeInfo: 'المطاعم في المبنى 16. التوصيل إلى المبنى 16 مجاني، وإلى المباني 2–15 بـ<strong>5 ريالات</strong>، وإلى المباني 17–27 بـ<strong>10 ريالات</strong>.', continue: 'متابعة الطلب',
 				orderEyebrow: 'الخطوة 2 من 2', orderTitle: 'أخبرنا بما<br><em>تشتهيه اليوم.</em>', orderText: 'عبّئ البيانات التالية وسنبدأ تجهيز طلبك.', details: 'بياناتك', fullName: 'الاسم الكامل', email: 'البريد الإلكتروني', phone: 'رقم الجوال', phoneHint: 'رقم جوال سعودي: 05xxxxxxxx أو +9665xxxxxxxx', deliveryPoint: 'مكان التوصيل', building: 'المبنى', selectBuilding: 'اختر المبنى', orderSection: 'طلبك', notesSection: 'ملاحظات الطلب', noteLabel: 'هل لديك ملاحظات؟', sendOrder: 'إرسال الطلب', delivery: 'تفاصيل التوصيل', rangePickup: 'استلام من المطعم', rangeSame: 'المبنى 16', rangeNear: 'المباني 2–15', rangeFar: 'المباني 17–27', subtotal: 'المجموع الفرعي', deliveryLabel: 'التوصيل', total: 'الإجمالي', simple: 'أسعار واضحة.<br>بلا مفاجآت.', estimated: 'وقت الوصول المتوقع', arrival: 'خلال 15–20 دقيقة', privacy: 'سنستخدم بريدك الإلكتروني لتأكيد الطلب فقط.',
 		contactEyebrow: 'نحن هنا للمساعدة', contactTitle: 'لديك سؤال؟<br><em>تواصل معنا.</em>', contactText: 'أرسل رسالتك وسيتواصل معك فريق وجهة في أقرب وقت.', yourName: 'اسمك', message: 'الرسالة', sendMessage: 'إرسال الرسالة', detailsTitle: 'بيانات التواصل', support: 'فريق دعم<br>وجهة', supportText: 'للاستفسار عن الطلبات أو المباني أو لإرسال ملاحظاتك، راسلنا أو تواصل معنا عبر البريد.', hours: 'الأحد – الخميس<br>8:00 ص – 4:00 م'
 	}
@@ -514,22 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const buildingGrid = document.getElementById('buildingGrid');
 	const campusMap = document.getElementById('campusMap');
-	const campusMapImage = document.getElementById('campusMapImage');
-	const removeCampusMapImage = () => {
-	if (campusMapImage && campusMapImage.parentNode) campusMapImage.parentNode.removeChild(campusMapImage);
-	};
-	const showCampusMapImage = () => {
-	if (campusMapImage && campusMapImage.naturalWidth > 0) campusMapImage.classList.add('is-loaded');
-	};
-	if (campusMapImage) {
-	campusMapImage.addEventListener('load', showCampusMapImage);
-	campusMapImage.addEventListener('error', removeCampusMapImage);
-	// A deferred script can miss load/error if the image already finished.
-	if (campusMapImage.complete) {
-	if (campusMapImage.naturalWidth > 0) showCampusMapImage();
-	else removeCampusMapImage();
-	}
-	}
+
 	const selectBuilding = (number) => {
 		localStorage.setItem('wijhah-building', String(number));
 		document.querySelectorAll('.building-button, .map-building').forEach((item) => item.classList.toggle('selected', item.dataset.number === String(number)));
