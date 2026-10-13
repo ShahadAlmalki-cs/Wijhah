@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>وجهة | Place an order</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
   <script>/* Set direction before first paint to avoid an LTR flash. */
     (function () {
       try {
@@ -17,12 +17,12 @@
         document.documentElement.setAttribute('dir', 'rtl');
       }
     }());
- </script>
+  </script>
   <script src="data.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">و</span><span class="brand-wordmark"><b class="brand-arabic">وجهة</b><small>WIJHAH</small></span></a><nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="vendors.html">Vendors</a><a href="about.html">Buildings</a><a href="contact.html">Help</a><a class="nav-cta active-cta" href="OrderPage.html">Start an order <span>&#8599;</span></a></nav></header>
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">و</span><span class="brand-wordmark"><b class="brand-arabic">وجهة</b><small>WIJHAH</small></span></a><nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="vendors.html">Vendors</a><a href="about.html">Buildings</a><a href="contact.html">Help</a><a class="nav-cta" href="OrderPage.html">Start an order <span aria-hidden="true">&#8599;</span></a></nav></header>
   <main class="page-width inner-page">
     <section class="page-intro compact-intro"><p class="eyebrow">STEP 2 OF 2</p><h1>Tell us what<br><em>you are craving.</em></h1><p>Fill in the details below and we will get your order moving.</p></section>
     <div class="order-layout">
@@ -41,7 +41,7 @@
          </div>
          <div class="field">
             <label for="orderPhone" id="phoneLabel">Mobile number</label>
-            <input id="orderPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="05xxxxxxxx" pattern="^(?:\+9665|05)[0-9]{8}$" title="Saudi mobile number, e.g. 0512345678 or +966512345678" aria-describedby="phoneHint" spellcheck="false" required>
+            <input id="orderPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="05xxxxxxxx" pattern="^(?:\+9665|05)[0-9]{8}$" title="Saudi mobile number, e.g. 0512345678" required>
             <small class="field-example" id="phoneHint">Saudi mobile number: 05xxxxxxxx or +9665xxxxxxxx</small>
          </div>
         </div>
@@ -62,10 +62,10 @@
         </div>
         <button class="button button-primary submit-button" type="submit">Send my order <span>&#8594;</span></button><p class="form-status" id="formStatus" role="status"></p>
       </form>
-      <aside class="order-summary"><p class="eyebrow">YOUR ORDER</p><h2>Simple pricing.<br>No surprises.</h2><div id="cartItems" class="cart-items"></div><div class="price-line"><span id="subtotalLabel">Subtotal</span><strong id="cartSubtotal">0 SAR</strong></div><div class="price-line"><span id="deliveryLabel">Delivery</span><strong id="cartDelivery">0 SAR</strong></div><div class="price-line total-line"><span id="totalLabel">Total</span><strong id="cartTotal">0 SAR</strong></div><div class="summary-divider"></div><p class="summary-small" id="estimatedLabel">Estimated arrival</p><strong class="arrival" id="arrivalValue">Within 15-20 minutes</strong><p class="summary-small" id="privacyNote">Demo checkout only. No payment is collected.</p></aside>
+      <aside class="order-summary"><p class="eyebrow">YOUR ORDER</p><h2>Simple pricing.<br>No surprises.</h2><div id="cartItems" class="cart-items"></div><div class="price-line"><span id="subtotalLabel">Subtotal</span><strong id="subtotal">0 SAR</strong></div><div class="price-line"><span id="deliveryFeeLabel">Delivery</span><strong id="deliveryFee">0 SAR</strong></div><div class="price-line total-row"><span id="totalLabel">Total</span><strong id="total">0 SAR</strong></div></aside>
     </div>
   </main>
   <footer class="site-footer"><div class="page-width"><span>وجهة · WIJHAH</span><span>Independent student project for Taif University · <span id="year"></span></span></div></footer>
- <div class="cart-bar" id="cartBar" hidden></div>
+  <div class="cart-bar" id="cartBar" hidden></div>
 </body>
 </html>
