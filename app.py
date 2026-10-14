@@ -5,13 +5,25 @@ Run locally:
     python app.py
 """
 
+import os
+import random
 import re
-from datetime import datetime, timedelta
-from flask import Flask, jsonify, request
+import string
+from datetime import datetime, timedelta, timezone
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+# The frontend lives in ./frontend, so point Flask's static and template
+# folders there instead of the default ./static and ./templates.
+FRONTEND_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frontend")
+
+app = Flask(
+    __name__,
+    static_folder=FRONTEND_DIR,
+    static_url_path="",
+    template_folder=FRONTEND_DIR,
+)
 CORS(app)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///wijhah.db"
@@ -90,16 +102,29 @@ class Order(db.Model):
     delivery_fee = db.Column(db.Integer, nullable=False)
     total = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(24), nullable=False, default="placed")
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
 
     items = db.relationship(
         "OrderItem", backref="order", cascade="all, delete-orphan", lazy=True
     )
 
+    def _created_at_utc(self):
+        """created_at as a timezone-aware UTC datetime.
+
+        SQLite does not preserve tzinfo, so rows read back are naive; treat a
+        naive value as UTC so it can be compared with datetime.now(timezone.utc).
+        """
+        created = self.created_at
+        if created is None:
+            return datetime.now(timezone.utc)
+        if created.tzinfo is None:
+            created = created.replace(tzinfo=timezone.utc)
+        return created
+
     def effective_status(self):
         """Status including demo auto-advance, floored by any manual PATCH."""
         stored_index = ORDER_STATUSES.index(self.status) if self.status in ORDER_STATUSES else 0
-        elapsed = (datetime.utcnow() - self.created_at).total_seconds()
+        elapsed = (datetime.now(timezone.utc) - self._created_at_utc()).total_seconds()
         auto_index = int(elapsed // AUTO_ADVANCE_SECONDS)
         return ORDER_STATUSES[min(max(stored_index, auto_index), len(ORDER_STATUSES) - 1)]
 
@@ -117,7 +142,7 @@ class Order(db.Model):
             "delivery_fee": self.delivery_fee,
             "total": self.total,
             "status": self.effective_status(),
-            "created_at": self.created_at.isoformat() + "Z",
+            "created_at": self._created_at_utc().isoformat().replace("+00:00", "Z"),
             "items": [item.to_dict() for item in self.items],
         }
 
@@ -331,10 +356,16 @@ VENDOR_SEED = [
 
 
 def seed_vendors():
-    """Insert the campus vendors and their menus once. Safe to call repeatedly."""
-    if Vendor.query.count() > 0:
-        return
+    """Insert any campus vendors that are missing. Safe to call repeatedly.
+
+    Each vendor is looked up individually so a database left half-seeded by an
+    older build (e.g. only the last row committed) is repaired on next start.
+    """
+    # Add every vendor inside the loop; committing outside the loop would
+    # only ever persist the last record (this was why only كرز البن showed).
     for vendor in VENDOR_SEED:
+        if db.session.get(Vendor, vendor["id"]):
+            continue
         record = Vendor(
             id=vendor["id"],
             name_en=vendor["name_en"],
@@ -357,7 +388,11 @@ def seed_vendors():
                 )
             )
         db.session.add(record)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        raise
 
 # Endpoints
 
@@ -375,9 +410,6 @@ def list_buildings():
 
 def _generate_order_id() -> str:
     """A short, human-readable, collision-resistant order id, e.g. WJ-7K2M9Q."""
-    import random
-    import string
-
     alphabet = string.ascii_uppercase + string.digits
     while True:
         candidate = "WJ-" + "".join(random.choices(alphabet, k=6))
@@ -467,10 +499,13 @@ def create_order():
         total=total,
         status="placed",
     )
-    order.items = items
-
-    db.session.add(order)
-    db.session.commit()
+    try:
+        db.session.add(order)
+        order.items = items
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return jsonify({"error": "Could not save the order"}), 500
 
     return jsonify(order.to_dict()), 201
 
@@ -498,9 +533,64 @@ def update_order_status(order_id):
             400,
         )
 
-    order.status = status
-    db.session.commit()
+    try:
+        order.status = status
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return jsonify({"error": "Could not update the order status"}), 500
     return jsonify(order.to_dict())
+
+
+# ---------------------------------------------------------------------------
+# Frontend page routes.
+# ---------------------------------------------------------------------------
+# These serve the static HTML/CSS/JS in ./frontend. The generic routes keep
+# the "page.html" links used throughout the markup ("vendors.html",
+# "OrderPage.html", ...) working without a 404, while the extensionless
+# aliases ("/vendors") give cleaner URLs.
+# ---------------------------------------------------------------------------
+
+@app.get("/")
+def serve_index():
+    """Landing page — the site's entry point."""
+    return send_from_directory(FRONTEND_DIR, "index.html")
+
+
+@app.get("/vendors")
+def serve_vendors():
+    return send_from_directory(FRONTEND_DIR, "vendors.html")
+
+
+@app.get("/about")
+def serve_about():
+    return send_from_directory(FRONTEND_DIR, "about.html")
+
+
+@app.get("/contact")
+def serve_contact():
+    return send_from_directory(FRONTEND_DIR, "contact.html")
+
+
+@app.get("/order")
+def serve_order():
+    return send_from_directory(FRONTEND_DIR, "OrderPage.html")
+
+
+@app.get("/tracking")
+def serve_tracking():
+    return send_from_directory(FRONTEND_DIR, "tracking.html")
+
+
+@app.get("/<path:filename>")
+def serve_frontend_file(filename):
+    """Serve any file in ./frontend (pages, style.css, script.js, images).
+
+    Registered last so the explicit routes above — and the /api/* endpoints,
+    which Flask matches first — always win. This keeps literal links such as
+    "OrderPage.html" and "vendors.html" resolving instead of returning 404.
+    """
+    return send_from_directory(FRONTEND_DIR, filename)
 
 
 if __name__ == "__main__":

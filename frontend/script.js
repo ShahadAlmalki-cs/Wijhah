@@ -1,4 +1,6 @@
-const buildingNames = {
+// Fallback building directory. Used only when /api/buildings is unreachable
+// (e.g. the frontend is hosted statically with no Flask API running).
+const BUILDING_NAMES_FALLBACK = {
 	2: ['College of Education', 'كلية التربية'],
 	3: ['College of Science', 'كلية العلوم'],
 	4: ['College of Medicine', 'كلية الطب'],
@@ -27,7 +29,73 @@ const buildingNames = {
 	27: ['Campus building', 'مبنى جامعي']
 };
 
-const getDeliveryFee = (number) => number === 16 ? 0 : number <= 15 ? 5 : 10;
+const FALLBACK_DELIVERY_FEE = (number) => number === 16 ? 0 : number <= 15 ? 5 : 10;
+
+// ------------------------------------------------------------------ //
+// Shared data store. Live values come from the API (GET /api/buildings
+// and GET /api/vendors); the hardcoded data.js arrays are only used as
+// an offline fallback when the API is unreachable.
+// ------------------------------------------------------------------ //
+const wijhahData = {
+	buildings: BUILDING_NAMES_FALLBACK,
+	vendors: typeof campusVendors !== 'undefined' ? campusVendors : [],
+	usingFallback: true,
+};
+
+// Delivery fee: prefers the building record the API seeded; falls back to
+// the hardcoded tier rule when the API is down.
+const getDeliveryFee = (number) => {
+	const record = wijhahData.buildings[number];
+	if (record && typeof record.fee === 'number') return record.fee;
+	return FALLBACK_DELIVERY_FEE(number);
+};
+
+// Building name in [en, ar]; prefers the API directory over the fallback.
+const buildingNames = (number) => {
+	const record = wijhahData.buildings[number];
+	if (record && record.en && record.ar) return [record.en, record.ar];
+	return BUILDING_NAMES_FALLBACK[number] || [`Building ${number}`, `المبنى ${number}`];
+};
+
+const loadWijhahData = async () => {
+	try {
+		const response = await fetch(`${WIJHAH_API_BASE}/api/buildings`);
+		if (response.ok) {
+			const list = await response.json();
+			if (Array.isArray(list) && list.length) {
+				// Normalise to { id, en, ar, fee }.
+				const map = {};
+				list.forEach((entry) => { map[entry.id] = { en: entry.name_en, ar: entry.name_ar, fee: entry.delivery_fee }; });
+				wijhahData.buildings = map;
+				wijhahData.usingFallback = false;
+			}
+		}
+	} catch (error) { /* API unreachable: keep the fallback directory */ }
+	try {
+		const response = await fetch(`${WIJHAH_API_BASE}/api/vendors`);
+		if (response.ok) {
+			const list = await response.json();
+			if (Array.isArray(list) && list.length) {
+				// Shape to match data.js: menu item ids come from slugs.
+				wijhahData.vendors = list.map((vendor) => ({
+					id: vendor.id,
+					name: vendor.name,
+					category: vendor.category,
+					building: vendor.building_id,
+					eta: vendor.eta,
+					accent: vendor.accent,
+					menu: (vendor.menu || []).map((item) => ({
+						id: item.id,
+						name: item.name,
+						description: item.description,
+						price: item.price,
+					})),
+				}));
+				wijhahData.usingFallback = false;
+			}
+		}
+	} catch (error) { /* API unreachable: keep the data.js fallback */ }
+};
 
 // The API runs on its own port, so never derive it from window.location.origin.
 // Override with window.WIJHAH_API_BASE before this script loads.
@@ -76,13 +144,13 @@ const setCopy = (selector, key, language, property = 'innerHTML') => {
 
 const renderVendorPage = (language) => {
 	const vendorGrid = document.getElementById('vendorGrid');
-	if (!vendorGrid || typeof campusVendors === 'undefined') return;
+	if (!vendorGrid || !wijhahData.vendors.length) return;
 	const isArabic = language === 'ar';
 	const savedBuilding = localStorage.getItem('wijhah-building');
 	const text = isArabic ? {
-		eyebrow: 'المطاعم المفتوحة الآن', title: 'اختر ما<br><em>تحبه اليوم.</em>', description: 'تصفح المطاعم التي تخدم الحرم الجامعي اليوم. جميع الطلبات تجهز من المبنى 16.', count: `${campusVendors.length} مطاعم مفتوحة`, location: 'التوصيل من المبنى 16', change: 'اختر مبنى التوصيل', menu: 'قائمة الطعام', add: 'إضافة', building: 'المبنى', minutes: 'دقيقة'
+		eyebrow: 'المطاعم المفتوحة الآن', title: 'اختر ما<br><em>تحبه اليوم.</em>', description: 'تصفح المطاعم التي تخدم الحرم الجامعي اليوم. جميع الطلبات تجهز من المبنى 16.', count: `${wijhahData.vendors.length} مطاعم مفتوحة`, location: 'التوصيل من المبنى 16', change: 'اختر مبنى التوصيل', menu: 'قائمة الطعام', add: 'إضافة', building: 'المبنى', minutes: 'دقيقة'
 	} : {
-		eyebrow: 'OPEN ON CAMPUS', title: 'Find something<br><em>you\'ll love.</em>', description: 'Browse the places serving campus today. Everything here is prepared in Building 16. You can add meals now and choose your building at checkout.', count: `${campusVendors.length} places open now`, location: 'Delivery from Building 16', change: 'Choose your delivery building', menu: 'Menu', add: 'Add', building: 'Building', minutes: 'min'
+		eyebrow: 'OPEN ON CAMPUS', title: 'Find something<br><em>you\'ll love.</em>', description: 'Browse the places serving campus today. Everything here is prepared in Building 16. You can add meals now and choose your building at checkout.', count: `${wijhahData.vendors.length} places open now`, location: 'Delivery from Building 16', change: 'Choose your delivery building', menu: 'Menu', add: 'Add', building: 'Building', minutes: 'min'
 	};
 	document.getElementById('vendorEyebrow').innerHTML = text.eyebrow;
 	document.getElementById('vendorTitle').innerHTML = text.title;
@@ -96,7 +164,7 @@ const renderVendorPage = (language) => {
 		toolbarLink.setAttribute('href', 'OrderPage.html');
 		toolbarLink.innerHTML = `${text.change} <span>&#8594;</span>`;
 	}
-	vendorGrid.innerHTML = campusVendors.map((vendor) => `
+	vendorGrid.innerHTML = wijhahData.vendors.map((vendor) => `
 		<article class="vendor-card accent-${vendor.accent}">
 			<div class="vendor-card-body">
 				<div class="vendor-card-header"><div><h2>${vendor.name[language]}</h2><span class="vendor-category">${vendor.category[language]}</span></div><span class="vendor-eta">${vendor.eta} ${text.minutes}</span></div>
@@ -106,7 +174,7 @@ const renderVendorPage = (language) => {
 		</article>`).join('');
 	vendorGrid.querySelectorAll('.menu-add').forEach((button) => {
 		button.addEventListener('click', () => {
-			const vendor = campusVendors.find((item) => item.id === button.dataset.vendor);
+			const vendor = wijhahData.vendors.find((item) => item.id === button.dataset.vendor);
 			const item = vendor.menu.find((menuItem) => menuItem.id === button.dataset.item);
 			const cart = JSON.parse(localStorage.getItem('wijhah-cart') || '[]');
 			const existing = cart.find((cartItem) => cartItem.itemId === item.id);
@@ -216,8 +284,8 @@ const saveDemoOrder = ({ name, email, phone, building, items, language }) => {
 	customer_email: email,
 	customer_phone: phone,
 	building_id: building,
-	building_name_en: buildingNames[building] ? buildingNames[building][0] : `Building ${building}`,
-	building_name_ar: buildingNames[building] ? buildingNames[building][1] : `المبنى ${building}`,
+	building_name_en: buildingNames(building)[0],
+	building_name_ar: buildingNames(building)[1],
 		subtotal,
 		delivery_fee: deliveryFee,
 		total,
@@ -263,7 +331,7 @@ const readLocalOrder = (orderId) => {
 
 const renderCart = (language) => {
 	const cartItems = document.getElementById('cartItems');
-	if (!cartItems || typeof campusVendors === 'undefined') return;
+	if (!cartItems || !wijhahData.vendors.length) return;
 	const isArabic = language === 'ar';
 	const cart = JSON.parse(localStorage.getItem('wijhah-cart') || '[]');
 	const building = Number(localStorage.getItem('wijhah-building') || 16);
@@ -371,23 +439,59 @@ const renderTrackingPage = async (language) => {
 // Direction is derived in one place. Arabic is the default so a first visit
 // without a saved choice still renders correctly.
 const DEFAULT_LANGUAGE = 'ar';
+const LANGUAGE_STORAGE_KEY = 'wijhah-language';
 
-const resolveLanguage = () => {
-	const saved = localStorage.getItem('wijhah-language');
-	return saved === 'ar' || saved === 'en' ? saved : DEFAULT_LANGUAGE;
+// ------------------------------------------------------------------ //
+// LANGUAGE STATE — single source of truth                              //
+//                                                                      //
+// The <html lang>/<html dir> attributes are set BEFORE first paint by  //
+// the inline bootstrap in every HTML file (it reads the same storage   //
+// key and defaults to 'ar'). From that moment, the DOM attribute is    //
+// the live truth and localStorage is only a persisted mirror of it.    //
+//                                                                      //
+// Rules enforced here:                                                 //
+//  1. getActiveLanguage() NEVER falls back to anything but 'ar' —      //
+//     an unreadable, stale or foreign value is discarded.              //
+//  2. persistLanguage() is called ONLY by the explicit toggle handler. //
+//     No other code path writes the storage key.                       //
+//  3. CTA / cart / form handlers read the language but never write it. //
+// ------------------------------------------------------------------ //
+
+const normalizeLanguage = (value) => (value === 'en' ? 'en' : 'ar');
+
+// Live language = the <html lang> attribute; falls back to 'ar' strictly.
+const getActiveLanguage = () => normalizeLanguage(document.documentElement.getAttribute('lang'));
+
+// Persist ONLY when the user explicitly toggles (see the #languageToggle
+// handler below). Every other caller must use syncDirection() instead.
+const persistLanguage = (language) => {
+	try { localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizeLanguage(language)); } catch (error) {}
 };
 
-const applyDirection = (language) => {
+// Update the document direction/lang attributes without touching storage.
+// Used on page load so the rendered DOM and the persisted choice agree.
+const syncDirection = (language) => {
+	const lang = normalizeLanguage(language);
 	const root = document.documentElement;
-	const isArabic = language === 'ar';
-	root.setAttribute('lang', isArabic ? 'ar' : 'en');
-	root.setAttribute('dir', isArabic ? 'rtl' : 'ltr');
+	root.setAttribute('lang', lang);
+	root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
 };
 
-const applyLanguage = (language) => {
-	const text = copy[language];
-	applyDirection(language);
-	localStorage.setItem('wijhah-language', language);
+// Kept for any code that still asks "what is saved?" — strict 'ar' default.
+const resolveLanguage = () => {
+	let saved = null;
+	try { saved = localStorage.getItem(LANGUAGE_STORAGE_KEY); } catch (error) {}
+	return saved === 'en' ? 'en' : DEFAULT_LANGUAGE; // anything else -> 'ar'
+};
+
+const applyDirection = syncDirection; // legacy name kept for compatibility
+
+const applyLanguage = (language, { persist = false } = {}) => {
+	const text = copy[normalizeLanguage(language)];
+	// Direction attributes only — persistence happens exclusively on a
+	// deliberate user toggle (persist: true from the #languageToggle handler).
+	syncDirection(language);
+	if (persist) persistLanguage(language);
 	const toggle = document.getElementById('languageToggle');
 	if (toggle) toggle.textContent = text.language;
 	setCopy('.main-nav a[href="index.html"]', 'navHome', language);
@@ -482,8 +586,11 @@ const applyLanguage = (language) => {
 	document.title = language === 'ar' ? 'وجهة | توصيل جامعي' : document.title.replace(' | توصيل جامعي', '');
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-	const language = resolveLanguage();
+document.addEventListener('DOMContentLoaded', async () => {
+	const language = getActiveLanguage();
+	// Try to replace the fallback directory with live API data first; every
+	// render below then reads from wijhahData, so both paths stay in sync.
+	await loadWijhahData();
 	const selectedBuilding = localStorage.getItem('wijhah-building');
 	const year = document.getElementById('year');
 	if (year) year.textContent = new Date().getFullYear();
@@ -493,9 +600,24 @@ document.addEventListener('DOMContentLoaded', () => {
 		toggle.id = 'languageToggle';
 		toggle.className = 'language-toggle';
 		toggle.type = 'button';
-		toggle.addEventListener('click', () => window.applyCampusLanguage(document.documentElement.lang === 'ar' ? 'en' : 'ar'));
+		// ------------------------------------------------------------------
+		// STRICT ISOLATION: this is the ONLY element in the entire app whose
+		// click handler changes the language, and the ONLY place the storage
+		// key is ever written (via applyLanguage(persist: true)).
+		// ------------------------------------------------------------------
+		toggle.addEventListener('click', () => {
+			const next = getActiveLanguage() === 'ar' ? 'en' : 'ar';
+			window.applyCampusLanguage(next);
+		});
 		nav.appendChild(toggle);
 	}
+
+	// ------------------------------------------------------------------
+	// NAVIGATION INTEGRITY: CTA buttons ("ابدأ طلبك", cart bar, etc.) are
+	// plain anchors. Their click handlers perform ZERO language writes and
+	// call ZERO language functions — the anchor's default navigation runs
+	// and the next page reads the unchanged persisted state.
+	// ------------------------------------------------------------------
 	if (nav && !document.getElementById('mobileNavToggle')) {
 		const mobileToggle = document.createElement('button');
 		mobileToggle.id = 'mobileNavToggle';
@@ -547,8 +669,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			mapBuilding.style.left = `${left}%`;
 			mapBuilding.style.top = `${top}%`;
 			mapBuilding.textContent = number;
-			mapBuilding.title = buildingNames[number]?.[0] || `Building ${number}`;
-			mapBuilding.setAttribute('aria-label', `Building ${number} ${buildingNames[number]?.[0] || ''}`);
+			mapBuilding.title = buildingNames(number)[0];
+			mapBuilding.setAttribute('aria-label', `Building ${number} ${buildingNames(number)[0]}`);
 			mapBuilding.addEventListener('click', () => selectBuilding(number));
 			campusMap.appendChild(mapBuilding);
 		}
@@ -596,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		return;
 		}
 			const fee = getDeliveryFee(number);
-			const name = buildingNames[number]?.[document.documentElement.lang === 'ar' ? 1 : 0] || `Building ${number}`;
+			const name = buildingNames(number)[document.documentElement.lang === 'ar' ? 1 : 0];
 			const feeLabel = fee === 0 ? (document.documentElement.lang === 'ar' ? 'مجاني' : 'Free') : `${fee} ${document.documentElement.lang === 'ar' ? 'ريال' : 'SAR'}`;
 				feeHint.textContent = document.documentElement.lang === 'ar' ? `التوصيل إلى ${name}: ${feeLabel} · الوقت المتوقع 15–20 دقيقة.` : `Delivery to ${name}: ${feeLabel} · estimated in 15–20 minutes.`;
 			localStorage.setItem('wijhah-building', String(number));
@@ -700,7 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const currentLanguage = document.documentElement.lang === 'ar' ? 1 : 0;
 		document.querySelectorAll('.building-button').forEach((button) => {
 			const number = Number(button.dataset.number);
-			const name = buildingNames[number]?.[currentLanguage] || (currentLanguage ? 'مبنى جامعي' : 'Campus building');
+			const name = buildingNames(number)[currentLanguage] || (currentLanguage ? 'مبنى جامعي' : 'Campus building');
 			const fee = getDeliveryFee(number);
 			const feeLabel = fee === 0 ? (currentLanguage ? 'مجاني' : 'Free') : `${fee} ${currentLanguage ? 'ريال' : 'SAR'}`;
 			button.innerHTML = `<span>${currentLanguage ? `المبنى ${number} (${name})` : `Building ${number} (${name})`}</span><small>${feeLabel}</small>`;
@@ -708,14 +830,22 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (buildingSelect) {
 			document.querySelectorAll('#buildingSelect option[data-number]').forEach((option) => {
 				const number = Number(option.dataset.number);
-				const name = buildingNames[number]?.[currentLanguage] || (currentLanguage ? 'مبنى جامعي' : 'Campus building');
+				const name = buildingNames(number)[currentLanguage] || (currentLanguage ? 'مبنى جامعي' : 'Campus building');
 				option.textContent = currentLanguage ? `المبنى ${number} (${name})` : `Building ${number} (${name})`;
 			});
 			buildingSelect.dispatchEvent(new Event('change'));
 		}
 	};
 	const originalApplyLanguage = applyLanguage;
-	window.applyCampusLanguage = (nextLanguage) => { originalApplyLanguage(nextLanguage); refreshBuildingLabels(); };
+	// Sole sanctioned entry point for changing the language. Called ONLY by
+	// the #languageToggle click handler above — persisting here keeps storage
+	// in lockstep with the visible state at the exact moment of the toggle.
+	window.applyCampusLanguage = (nextLanguage) => {
+		originalApplyLanguage(nextLanguage, { persist: true });
+		refreshBuildingLabels();
+	};
+	// Initial render: align DOM with the stored choice ('ar' default) but do
+	// NOT write storage — the user has not toggled anything yet.
 	applyLanguage(language);
 	refreshBuildingLabels();
 
@@ -723,4 +853,37 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (document.getElementById('trackingPage')) {
 		setInterval(() => renderTrackingPage(document.documentElement.lang), 4000);
 	}
+
+	// ------------------------------------------------------------------
+	// PAGE TRANSITIONS
+	// Mark the document as "entered" so the CSS fade-in runs, then fade
+	// the current page out before any same-origin navigation commits. This
+	// removes the abrupt white flash when clicking navbar links or CTAs.
+	// ------------------------------------------------------------------
+	document.documentElement.classList.add('page-enter');
+
+	document.addEventListener('click', (event) => {
+		// Respect modifier-clicks and middle-clicks — those open a new tab.
+		if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+		const anchor = event.target.closest('a[href]');
+		if (!anchor) return;
+		const href = anchor.getAttribute('href');
+		// Ignore in-page anchors, downloads, and external / new-tab targets.
+		if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+		let url;
+		try { url = new URL(href, window.location.href); } catch (e) { return; }
+		if (url.origin !== window.location.origin) return;
+		if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+		event.preventDefault();
+		document.documentElement.classList.add('page-leaving');
+		window.setTimeout(() => { window.location.href = url.href; }, 200);
+	});
+
+	// Back/forward cache: a restored page must be fully visible immediately.
+	window.addEventListener('pageshow', (event) => {
+		if (event.persisted) {
+			document.documentElement.classList.remove('page-leaving');
+			document.documentElement.classList.add('page-restored');
+		}
+	});
 });

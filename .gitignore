@@ -11,5 +11,9 @@ instance/
 # Editor / OS
 .vscode/
 .DS_Store
+# Logs / dev-server output
+*.log
+server.err
 # Scratch
 _tmp_*.py
+vendors.json
